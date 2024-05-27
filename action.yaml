@@ -1,4 +1,4 @@
-name: 'Synchronize staging branch'
+name: 'Reset Staging'
 description: 'Reset the staging branch with the main branch merging some branches identified by a specific label.'
 inputs:
   repository:
@@ -12,7 +12,7 @@ inputs:
     default: 'staging'
   label:
     description: 'The PR label that is used to find branch to merge in the target one.'
-    default: 'in-staging'
+    default: 'staging'
   user-name:
     description: 'The user name used to push the branch.'
     default: 'github-actions[bot]'
