@@ -61,7 +61,7 @@ runs:
 
     - name: Run synchronization script
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ github.token }}
       run: bun run ${{ github.action_path }}/index.ts \
         --repository ${{ inputs.repository }} \
         --source-branch ${{ inputs.source-branch }} \
