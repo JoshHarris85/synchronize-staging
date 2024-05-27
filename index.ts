@@ -17,6 +17,10 @@ export async function run(): Promise<number> {
       strict: true,
       allowPositionals: true,
     })
+    console.log("HERE DUMMY")
+    for (let [key, value] of Object.entries(inputs)) {
+      console.log(key, value);
+    }
     if (!inputs['repository']) throw new Error('repository is required')
     if (!inputs['source-branch']) throw new Error('source-branch is required')
     if (!inputs['target-branch']) throw new Error('target-branch is required')
