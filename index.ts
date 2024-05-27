@@ -4,7 +4,7 @@ function parseArgs(args: string[]) {
   const parsed: { [key: string]: string } = {};
   args.forEach(arg => {
     const [key, value] = arg.split('=');
-    parsed[key.replace(/^--/, '')] = value;
+    parsed[key.trim().replace(/^--/, '')] = value;
   });
   return parsed;
 }
