@@ -1,30 +1,4 @@
 name: 'Reset Staging'
-description: 'Reset the staging branch with the main branch merging some branches identified by a specific label.'
-inputs:
-  repository:
-    description: 'The repository name in Github owner/repository. e.g: TheMenu/monrepo'
-    default: ${{ github.repository }}
-    required: true
-  source-branch:
-    description: 'The branch name used as base branch to synchronize the target one.'
-    default: 'main'
-    required: true
-  target-branch:
-    description: 'The branch name used as target.'
-    default: 'staging'
-    required: true
-  label:
-    description: 'The PR label that is used to find branch to merge in the target one.'
-    default: 'staging'
-    required: true
-  user-name:
-    description: 'The user name used to push the branch.'
-    default: 'github-actions[bot]'
-    required: true
-  user-email:
-    description: 'The user email used to push the branch.'
-    default: 'github-actions[bot]@users.noreply.github.com'
-    required: true
 
 branding:
   color: 'blue'
@@ -33,34 +7,6 @@ branding:
 runs:
   using: 'composite'
   steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - name: Synchronize staging branch
+      uses: Sy1v4in/synchronize-staging@v0.2.1
 
-    - name: Set up Bun
-      uses: oven-sh/setup-bun@v1
-      with:
-        bun-version: 'latest'
-
-    - name: Cache Bun dependencies
-      uses: actions/cache@v2
-      with:
-        path: ~/.bun/install/cache
-        key: ${{ runner.os }}-bun-${{ hashFiles('**/package.json') }}
-        restore-keys: |
-          ${{ runner.os }}-bun-
-
-    - name: Install dependencies with Bun
-      run: bun install
-
-    - name: Configure Git
-      run: |
-        git config user.name "${{ inputs.user-name }}"
-        git config user.email "${{ inputs.user-email }}"
-
-    - name: Run synchronization script
-      run: bun run ${{ github.action_path }}/index.ts \
-        --repository ${{ inputs.repository }} \
-        --source-branch ${{ inputs.source-branch }} \
-        --target-branch ${{ inputs.target-branch }} \
-        --label ${{ inputs.label }}
-      shell: bash
