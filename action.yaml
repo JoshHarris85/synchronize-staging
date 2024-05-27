@@ -63,8 +63,8 @@ runs:
       env:
         GH_TOKEN: ${{ github.token }}
       run: bun run ${{ github.action_path }}/index.ts \
-        --repository ${{ inputs.repository }} \
-        --source-branch ${{ inputs.source-branch }} \
-        --target-branch ${{ inputs.target-branch }} \
-        --label ${{ inputs.label }}
+        --repository="${{ inputs.repository }}" \
+        --source-branch="${{ inputs['source-branch'] }}" \
+        --target-branch="${{ inputs['target-branch'] }}" \
+        --label="${{ inputs.label }}"
       shell: bash
