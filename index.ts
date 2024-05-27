@@ -3,6 +3,7 @@ import { parseArgs } from "util"
 
 export async function run(): Promise<number> {
   try {
+    console.log("HERE DUMMY", process.env.GH_TOKEN, !process.env.GH_TOKEN)
     if (!process.env.GH_TOKEN) throw new Error('GH_TOKEN is not set')
 
     const { values: inputs } = parseArgs({
