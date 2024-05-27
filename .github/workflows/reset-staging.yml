@@ -1,12 +1,22 @@
-name: Say Hello
+name: Reset Staging
 
 on:
   workflow_dispatch:
 
 jobs:
   reset-staging:
-    name: Checks if this action works
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: ./
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run Reset Staging Action
+        uses: ./
+        with:
+          repository: ${{ github.repository }}
+          source-branch: 'main'
+          target-branch: 'staging'
+          label: 'staging'
+          user-name: 'github-actions[bot]'
+          user-email: 'github-actions[bot]@users.noreply.github.com'
