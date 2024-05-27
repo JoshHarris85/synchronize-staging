@@ -17,7 +17,7 @@ export async function run(): Promise<number> {
       strict: true,
       allowPositionals: true,
     })
-    console.log("HERE DUMMY")
+    console.log("HERE DUMMY", inputs)
     for (let [key, value] of Object.entries(inputs)) {
       console.log(key, value);
     }
