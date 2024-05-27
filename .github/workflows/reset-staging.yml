@@ -20,3 +20,5 @@ jobs:
           label: 'staging'
           user-name: 'github-actions[bot]'
           user-email: 'github-actions[bot]@users.noreply.github.com'
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
