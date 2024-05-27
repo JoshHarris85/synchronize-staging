@@ -1,5 +1,5 @@
 import { execute } from "./src";
-import { parseArgs } from "util";
+import minimist from 'minimist';
 
 export async function run(): Promise<number> {
   try {
@@ -7,26 +7,16 @@ export async function run(): Promise<number> {
 
     console.log('Arguments:', process.argv.slice(2));
 
-    const { values: inputs } = parseArgs({
-      args: process.argv.slice(2),
-      options: {
-        repository: { type: 'string', required: true },
-        'source-branch': { type: 'string', required: true },
-        'target-branch': { type: 'string', required: true },
-        label: { type: 'string', required: true },
-      },
-      strict: true,
-      allowPositionals: true,
-    });
+    const inputs = minimist(process.argv.slice(2));
 
     console.log('Parsed inputs:', inputs);
 
-    if (!inputs['repository']) throw new Error('repository is required');
+    if (!inputs.repository) throw new Error('repository is required');
     if (!inputs['source-branch']) throw new Error('source-branch is required');
     if (!inputs['target-branch']) throw new Error('target-branch is required');
-    if (!inputs['label']) throw new Error('label is required');
+    if (!inputs.label) throw new Error('label is required');
 
-    const githubToken = process.env.GITHUB_TOKEN;
+    const githubToken = process.env.GH_TOKEN;
     const repository: string[] = inputs.repository.split('/');
     const sourceBranch: string = inputs['source-branch'];
     const targetBranch: string = inputs['target-branch'];
