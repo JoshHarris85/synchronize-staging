@@ -1,5 +1,13 @@
 import { execute } from "./src";
-import minimist from 'minimist';
+
+function parseArgs(args: string[]) {
+  const parsed: { [key: string]: string } = {};
+  args.forEach(arg => {
+    const [key, value] = arg.split('=');
+    parsed[key.replace(/^--/, '')] = value;
+  });
+  return parsed;
+}
 
 export async function run(): Promise<number> {
   try {
@@ -7,7 +15,7 @@ export async function run(): Promise<number> {
 
     console.log('Arguments:', process.argv.slice(2));
 
-    const inputs = minimist(process.argv.slice(2));
+    const inputs = parseArgs(process.argv.slice(2));
 
     console.log('Parsed inputs:', inputs);
 
