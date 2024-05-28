@@ -5,7 +5,8 @@ const checkout: Checkout = async (branch, { pull = false, create = false } = {})
   const checkoutOptions = create ? "-b" : ""
   console.log(`Checking out branch: ${branch} with options: ${checkoutOptions}`)
   try {
-    await run($`git checkout ${checkoutOptions} ${branch}`)
+    const checkoutOutput = await run($`git checkout ${checkoutOptions} ${branch}`)
+    console.log(`Checkout output: ${checkoutOutput}`)
   } catch (error) {
     console.error(`Failed to checkout branch ${branch}:`, error)
     throw error
@@ -14,7 +15,8 @@ const checkout: Checkout = async (branch, { pull = false, create = false } = {})
   if (pull) {
     console.log(`Pulling branch: ${branch}`)
     try {
-      await run($`git pull`)
+      const pullOutput = await run($`git pull`)
+      console.log(`Pull output: ${pullOutput}`)
     } catch (error) {
       console.error(`Failed to pull branch ${branch}:`, error)
       throw error
@@ -39,7 +41,8 @@ type Merge = (branch: string) => Promise<void>
 const merge: Merge = async branch => {
   console.log(`Merging branch: ${branch}`)
   try {
-    await run($`git merge origin/${branch} --no-verify --no-edit`)
+    const mergeOutput = await run($`git merge origin/${branch} --no-verify --no-edit`)
+    console.log(`Merge output: ${mergeOutput}`)
   } catch (error) {
     console.error(`Failed to merge branch ${branch}:`, error)
     throw error
@@ -51,7 +54,8 @@ type AbortMerge = () => Promise<void>
 const abortMerge: AbortMerge = async () => {
   console.log('Aborting merge')
   try {
-    await run($`git merge --abort`)
+    const abortOutput = await run($`git merge --abort`)
+    console.log(`Abort output: ${abortOutput}`)
   } catch (error) {
     console.error('Failed to abort merge:', error)
     throw error
@@ -63,7 +67,8 @@ type PushForce = (branch: string) => Promise<void>
 const pushForce: PushForce = async branch => {
   console.log(`Pushing branch: ${branch} with force`)
   try {
-    await run($`git push --force --set-upstream origin ${branch}`)
+    const pushOutput = await run($`git push --force --set-upstream origin ${branch}`)
+    console.log(`Push output: ${pushOutput}`)
   } catch (error) {
     console.error(`Failed to push branch ${branch} with force:`, error)
     throw error
