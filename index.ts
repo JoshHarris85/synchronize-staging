@@ -34,14 +34,16 @@ export async function run(): Promise<number> {
 
     const runtime = execute({ githubToken, logger: console });
     await runtime.synchronizeBranchesAndLabels({ repository: { owner: repository[0], repo: repository[1] }, sourceBranch, targetBranch, label });
+
+    console.info('Synchronization complete');
   } catch (error) {
-    console.error(error);
+    console.error('Error during synchronization:', error);
     return -1;
   }
   return 0;
 }
 
 run().then(status => process.exit(status)).catch(error => {
-  console.error(error);
+  console.error('Unhandled error:', error);
   process.exit(-1);
 });
