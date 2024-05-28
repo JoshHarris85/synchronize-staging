@@ -11,7 +11,7 @@ function parseArgs(args: string[]) {
 
 export async function run(): Promise<number> {
   try {
-    if (!process.env.GH_TOKEN) throw new Error('GH_TOKEN is not set');
+    if (!process.env.GITHUB_TOKEN) throw new Error('GITHUB_TOKEN is not set');
 
     console.log('Arguments:', process.argv.slice(2));
 
@@ -24,7 +24,7 @@ export async function run(): Promise<number> {
     if (!inputs['target-branch']) throw new Error('target-branch is required');
     if (!inputs.label) throw new Error('label is required');
 
-    const githubToken = process.env.GH_TOKEN;
+    const githubToken = process.env.GITHUB_TOKEN;
     const repository: string[] = inputs.repository.split('/');
     const sourceBranch: string = inputs['source-branch'];
     const targetBranch: string = inputs['target-branch'];
