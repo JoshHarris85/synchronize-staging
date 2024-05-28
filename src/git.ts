@@ -13,7 +13,7 @@ const checkout: Checkout = async (branch, { pull = false, create = false } = {})
   }
 
   if (pull) {
-    console.log(`Pulling branch: ${branch}`)
+    console.log(`Entering pull block for branch: ${branch}`)
     try {
       const pullOutput = await run($`git pull`)
       console.log(`Pull output: ${pullOutput}`)
@@ -21,8 +21,10 @@ const checkout: Checkout = async (branch, { pull = false, create = false } = {})
       console.error(`Failed to pull branch ${branch}:`, error)
       throw error
     }
+  } else {
+    console.log(`Not pulling branch: ${branch} because pull option is set to ${pull}`)
   }
-  console.log(`Checked out and pulled branch: ${branch}`)
+  console.log(`Checked out and handled branch: ${branch}`)
 }
 
 type CreateBranch = (branch: string) => Promise<void>
@@ -77,14 +79,19 @@ const pushForce: PushForce = async branch => {
 }
 
 const run = async (command: ShellPromise, errorMessage?: string): Promise<string> => {
-  const { stdout, stderr, exitCode } = await command.quiet()
-  const cleanMessage = [errorMessage, stderr.toString()].filter(Boolean).join(": ")
-  if (exitCode) {
-    console.error(`Command failed: ${cleanMessage}`)
-    throw new Error(cleanMessage)
+  try {
+    const { stdout, stderr, exitCode } = await command.quiet()
+    const cleanMessage = [errorMessage, stderr.toString()].filter(Boolean).join(": ")
+    if (exitCode) {
+      console.error(`Command failed: ${cleanMessage}`)
+      throw new Error(cleanMessage)
+    }
+    console.log(`Command output: ${stdout.toString().trim()}`)
+    return stdout.toString().trim()
+  } catch (error) {
+    console.error(`Error running command: ${command.command}: ${error}`)
+    throw error
   }
-  console.log(`Command output: ${stdout.toString().trim()}`)
-  return stdout.toString().trim()
 }
 
 export { abortMerge, checkout, createBranch, merge, pushForce }
