@@ -12,6 +12,7 @@ const checkout: Checkout = async (branch, { pull = false, create = false } = {})
     throw error
   }
 
+  console.log(`Pull option value: ${pull}`)
   if (pull) {
     console.log(`Entering pull block for branch: ${branch}`)
     try {
