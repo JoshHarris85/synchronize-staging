@@ -9,7 +9,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "@actions/github": "6.0.0",
+    "@actions/github": "9.1.1",
     "@octokit/core": "^6.1.2",
     "@octokit/rest": "^20.1.1",
     "minimist": "^1.2.8"
